@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -19,8 +20,9 @@ namespace HRChatBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                //await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
-                await Conversation.SendAsync(activity, () => new HRBotLuisDialog());
+                ConnectorClient connector=new ConnectorClient(new Uri(activity.ServiceUrl));
+                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+               // await Conversation.SendAsync(activity, () => new HRBotLuisDialog());
             }
             else
             {
