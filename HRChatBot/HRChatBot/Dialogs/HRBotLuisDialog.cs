@@ -14,7 +14,7 @@ using System.Configuration;
 
 namespace HRChatBot.Dialogs
 {
-    [LuisModel("a5cc497e-7f67-4d10-9a28-53e99f95e00b", "ba1dea7b12e0417690d7267fe5cc39a9")]
+    [LuisModel("51121885-aaa0-44c6-ac2a-b5328326c08f", "276a30a3abf9447fb9a5a07fb36c2743")]
     //[LuisModel("modelid", "subkey")]
     [Serializable]
     public class HRBotLuisDialog : LuisDialog<object>
@@ -31,11 +31,32 @@ namespace HRChatBot.Dialogs
             await context.Forward(new GreetingsDialog(), GreetingDialogDone, await message, cts.Token);
         }
 
+        [LuisIntent("Greeting")]        
+        public async Task Greeting(IDialogContext context, IAwaitable<IMessageActivity> message, LuisResult result)
+        {
+            var cts = new CancellationTokenSource();
+            await context.Forward(new GreetingsDialog(), GreetingDialogDone, await message, cts.Token);
+        }
+
         [LuisIntent("Contact")]
         public async Task AboutMe(IDialogContext context, LuisResult result)
         {
             await context.PostAsync(@"Please contact Zeenat Tezabwala for PF related queries .email-id :Zeenat_Tezabwala@JLTGROUP.COM ,extension : 2559");
                   context.Wait(MessageReceived);
+        }
+
+        [LuisIntent("medical reimbursement")]
+        public async Task Medical(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync(@"Please contact Vinod Apte medical reimbursement related queries .email-id :vinod_apte@jltgroup.com ,extension : 2664");
+            context.Wait(MessageReceived);
+        }
+
+        [LuisIntent("paternity leave")]
+        public async Task PaternityLeave(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync(@"Please contact Zeenat Tezabwala for  paternity leave related queries .email-id :Zeenat_Tezabwala@JLTGROUP.COM ,extension : 2559");
+            context.Wait(MessageReceived);
         }
         private async Task GreetingDialogDone(IDialogContext context, IAwaitable<bool> result)
         {
