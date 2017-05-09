@@ -14,8 +14,8 @@ using System.Configuration;
 
 namespace HRChatBot.Dialogs
 {
-    //[LuisModel("a5cc497e-7f67-4d10-9a28-53e99f95e00b", "ba1dea7b12e0417690d7267fe5cc39a9")]
-    [LuisModel("modelid", "subkey")]
+    [LuisModel("a5cc497e-7f67-4d10-9a28-53e99f95e00b", "ba1dea7b12e0417690d7267fe5cc39a9")]
+    //[LuisModel("modelid", "subkey")]
     [Serializable]
     public class HRBotLuisDialog : LuisDialog<object>
     {
