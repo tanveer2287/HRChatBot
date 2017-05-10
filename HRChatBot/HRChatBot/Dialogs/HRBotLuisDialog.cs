@@ -23,12 +23,32 @@ namespace HRChatBot.Dialogs
         {
         }
 
-        [LuisIntent("None")]
+        //[LuisIntent("None")]
+        //[LuisIntent("")]
+        //public async Task None(IDialogContext context, IAwaitable<IMessageActivity> message, LuisResult result)
+        //{
+        //    var cts = new CancellationTokenSource();
+        //    await context.Forward(new GreetingsDialog(), GreetingDialogDone, await message, cts.Token);
+        //}
+
         [LuisIntent("")]
-        public async Task None(IDialogContext context, IAwaitable<IMessageActivity> message, LuisResult result)
+        public async Task None(IDialogContext context, LuisResult result)
         {
-            var cts = new CancellationTokenSource();
-            await context.Forward(new GreetingsDialog(), GreetingDialogDone, await message, cts.Token);
+            var dialog = new CommonResponsesDialog();
+            dialog.InitialMessage = result.Query;
+            context.Call(dialog, AfterCommonResponseHandled);
+        }
+
+        private async Task AfterCommonResponseHandled(IDialogContext context, IAwaitable<bool> result)
+        {
+            var messageHandled = await result;
+
+            if (!messageHandled)
+            {
+                await context.PostAsync("I’m not sure what you want.");
+            }
+
+            context.Wait(MessageReceived);
         }
 
         [LuisIntent("Greeting")]        

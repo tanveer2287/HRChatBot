@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Dialogs\CommonResponsesDialog.cs" />
     <Compile Include="Dialogs\GreetingsDialog.cs" />
     <Compile Include="Dialogs\HRBotLuisDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
