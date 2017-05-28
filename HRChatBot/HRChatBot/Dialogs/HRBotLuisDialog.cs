@@ -23,22 +23,6 @@ namespace HRChatBot.Dialogs
         {
         }
 
-        //[LuisIntent("None")]
-        //[LuisIntent("")]
-        //public async Task None(IDialogContext context, IAwaitable<IMessageActivity> message, LuisResult result)
-        //{
-        //    var cts = new CancellationTokenSource();
-        //    await context.Forward(new GreetingsDialog(), GreetingDialogDone, await message, cts.Token);
-        //}
-
-        [LuisIntent("")]
-        public async Task None(IDialogContext context, LuisResult result)
-        {
-            var dialog = new CommonResponsesDialog();
-            dialog.InitialMessage = result.Query;
-            context.Call(dialog, AfterCommonResponseHandled);
-        }
-
         private async Task AfterCommonResponseHandled(IDialogContext context, IAwaitable<bool> result)
         {
             var messageHandled = await result;
@@ -51,19 +35,42 @@ namespace HRChatBot.Dialogs
             context.Wait(MessageReceived);
         }
 
-        [LuisIntent("Greeting")]        
-        public async Task Greeting(IDialogContext context, IAwaitable<IMessageActivity> message, LuisResult result)
+
+
+
+
+        //[LuisIntent("Greeting")]
+        //public async Task Greeting(IDialogContext context, LuisResult result)
+        //{
+        //    await context.PostAsync(@"Hi,how may i help you");
+        //    context.Wait(MessageReceived);
+        //}
+
+        //[LuisIntent("Hi")]
+        //public async Task Hi(IDialogContext context, LuisResult result)
+        //{
+        //    await context.PostAsync(@"Hi,how may i help you");
+        //    context.Wait(MessageReceived);
+        //}
+
+
+        [LuisIntent("None")]
+        [LuisIntent("")]
+        public async Task None(IDialogContext context, IAwaitable<IMessageActivity> message, LuisResult result)
         {
             var cts = new CancellationTokenSource();
             await context.Forward(new GreetingsDialog(), GreetingDialogDone, await message, cts.Token);
         }
 
-        [LuisIntent("Contact")]
-        public async Task AboutMe(IDialogContext context, LuisResult result)
+        private async Task GreetingDialogDone(IDialogContext context, IAwaitable<object> result)
         {
-            await context.PostAsync(@"Please contact Zeenat Tezabwala for PF related queries .email-id :Zeenat_Tezabwala@JLTGROUP.COM ,extension : 2559");
-                  context.Wait(MessageReceived);
+            var success = await result;
+            if (success==null)
+                await context.PostAsync("I'm sorry. I didn't understand you.");
+
+            context.Wait(MessageReceived);
         }
+
 
         [LuisIntent("medical reimbursement")]
         public async Task Medical(IDialogContext context, LuisResult result)
@@ -78,13 +85,6 @@ namespace HRChatBot.Dialogs
             await context.PostAsync(@"Please contact Zeenat Tezabwala for  paternity leave related queries .email-id :Zeenat_Tezabwala@JLTGROUP.COM ,extension : 2559");
             context.Wait(MessageReceived);
         }
-        private async Task GreetingDialogDone(IDialogContext context, IAwaitable<bool> result)
-        {
-            var success = await result;
-            if (!success)
-                await context.PostAsync("I'm sorry. I didn't understand you.");
-
-            context.Wait(MessageReceived);
-        }
+      
     }
 }
