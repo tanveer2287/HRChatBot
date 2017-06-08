@@ -46,12 +46,12 @@ namespace HRChatBot.Dialogs
         //    context.Wait(MessageReceived);
         //}
 
-        //[LuisIntent("Hi")]
-        //public async Task Hi(IDialogContext context, LuisResult result)
-        //{
-        //    await context.PostAsync(@"Hi,how may i help you");
-        //    context.Wait(MessageReceived);
-        //}
+        [LuisIntent("Hi")]
+        public async Task Hi(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync(@"Hi,how may i help you");
+            context.Wait(MessageReceived);
+        }
 
 
         [LuisIntent("None")]
